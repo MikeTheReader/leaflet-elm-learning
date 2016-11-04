@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elm Leaflet</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/core.css">
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
+    <style>
+        #mapid {
+            height: 400px;
+            border: 1px solid #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <h2>Elm Leaflet</h2>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    Map (JavaScript)
+                </div>
+                <div class="panel-body">
+                    <div id="mapid"></div>
+                </div>
+            </div>
+        </div>
+        <div id="elmApp"/>
+    </div>
+
+    <script src="dist/bundle.js"></script>
+    <script>
+        var app = Elm.Main.embed(document.getElementById("elmApp"));
+
+        var mymap = L.map('mapid', {zoomControl:false}).setView([44.56, -123.26], 13);
+        L.esri.basemapLayer("Topographic").addTo(mymap);
+
+        app.ports.setBounds.send(mymap.getBounds().toBBoxString());
+
+        mymap.on('moveend', function() {
+            var bounds = mymap.getBounds().toBBoxString();
+            app.ports.setBounds.send(bounds);
+        })
+
+        app.ports.zoomMap.subscribe(function(zoom) {
+            mymap.zoomIn(zoom)
+        });
+
+
+        var markers = {};
+        mymap.on('click', function(e) {
+            var newMarker = new L.marker(e.latlng).addTo(mymap);
+            var latLng = newMarker.getLatLng();
+
+            app.ports.addMarker.send({
+                lat: latLng.lat,
+                lng: latLng.lng,
+                id: newMarker._leaflet_id
+            });
+            markers[newMarker._leaflet_id] = newMarker;
+        })
+
+        app.ports.removeMarker.subscribe(function(markerid) {
+            console.log("Inside remove marker", markerid);
+            mymap.removeLayer(markers[markerid]);
+            delete markers[markerid];
+        })
+
+    </script>
+</body>
+
+</html>

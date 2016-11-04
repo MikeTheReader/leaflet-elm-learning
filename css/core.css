@@ -1,0 +1,94 @@
+pre {
+    background-color: #f0f0f0;
+}
+
+.error-message {
+    display: inline;
+    margin-left: 20px;
+    color: #ff5555;
+}
+
+.react-tagsinput {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.react-tagsinput-tag {
+    background-color: #cde69c;
+    border-radius: 2px;
+    border: 1px solid #a5d24a;
+    color: #638421;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+.react-tagsinput-remove {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.react-tagsinput-tag a::before {
+    content: " x";
+}
+
+.react-tagsinput-input {
+    background: transparent;
+    border: 0;
+    color: #777;
+    font-family: sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    margin-top: 1px;
+    outline: none;
+    padding: 5px;
+    width: 80px;
+}
+
+.field-container {
+    padding: 5px 10px;
+    margin: 3px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    position: relative;
+}
+
+.field-container:hover {
+    background: #DFF0D8;
+    border-color: #DFF0D8;
+}
+
+.field-container.selected {
+    background: #DFF0D8;
+    border: 2px dotted #337AB7;
+}
+
+.field-container > .btn {
+    display: none;
+
+}
+
+.field-container.selected > .btn {
+    display: block;
+}
+
+.field-container:hover > .btn {
+    display: block;
+}
+
+.add-new-field-button {
+    margin-top: 5px;
+}
+
+input[type=checkbox] {
+    height: auto;
+    width: auto;
+}
