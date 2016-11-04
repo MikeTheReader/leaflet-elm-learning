@@ -7,7 +7,6 @@
     <title>Elm Leaflet</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="css/core.css">
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
     <style>
@@ -53,7 +52,6 @@
             mymap.zoomIn(zoom)
         });
 
-
         var markers = {};
         mymap.on('click', function(e) {
             var newMarker = new L.marker(e.latlng).addTo(mymap);
@@ -68,7 +66,6 @@
         })
 
         app.ports.removeMarker.subscribe(function(markerid) {
-            console.log("Inside remove marker", markerid);
             mymap.removeLayer(markers[markerid]);
             delete markers[markerid];
         })
